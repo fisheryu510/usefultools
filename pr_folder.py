@@ -6,8 +6,8 @@
 __author__ = 'fisher yu'
 
 import argparse
-import sys
 import os.path
+import sys
 
 
 def parse_arguments():
@@ -41,7 +41,7 @@ def parse_arguments():
     # create pr resource folder
     os.mkdir(project_path)
     print("create %s" % project_path)
-    sub_folders = ['music', 'video', 'other']
+    sub_folders = ['audio', 'video', 'other', 'picture', 'result']
     for item in sub_folders:
         sub_folder = os.path.join(project_path, item)
         print("create %s" % sub_folder)
