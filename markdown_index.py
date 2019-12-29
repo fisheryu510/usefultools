@@ -29,21 +29,21 @@ def parse_arguments():
 
     args = parser.parse_args()
     index_tag = args.tag
-    file = args.file
+    md_file = args.file
     prefix = args.prefix
 
-    if not index_tag and not file:
+    if not index_tag and not md_file:
         print("tag and file is required")
         sys.exit(1)
-    if not os.path.exists(file):
+    if not os.path.exists(md_file):
         print("file not exists, please check your file path")
         sys.exit(1)
-    return index_tag, file, prefix
+    return index_tag, md_file, prefix
 
 
 def main():
-    index_tag, file, prefix = parse_arguments()
-    markdown = MarkdownIndexExtractor(file, index_tag, prefix)
+    index_tag, md_file, prefix = parse_arguments()
+    markdown = MarkdownIndexExtractor(md_file, index_tag, prefix)
     try:
         markdown.bind_pattern()
         markdown.extract()
@@ -74,9 +74,9 @@ class MarkdownIndexExtractor:
     def extract(self):
         with open(self.md_file, encoding='utf-8') as markdown:
             content = markdown.readlines()
-            for line in content:
-                if self.pattern.match(line):
-                    self.result.append(line.replace(self.remove_str, ""))
+        for line in content:
+            if self.pattern.match(line):
+                self.result.append(line.replace(self.remove_str, ""))
 
     def make_index(self):
         index_template = "- [{}]({}{}#{})"
