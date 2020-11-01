@@ -139,7 +139,6 @@ def cmd_entry():
 
 
 def exec_merge(m3u8_dir, m3u8_files, ts_dir, output, store_dir):
-    index = 0
     pwd = os.getcwd()
     for m3u8 in m3u8_files:
         sub_path = os.path.join(m3u8_dir, m3u8)
@@ -166,14 +165,17 @@ def exec_merge(m3u8_dir, m3u8_files, ts_dir, output, store_dir):
 
         # 生成文件名
         if not output:
-            output = "%s_%d" % (m3u8, index)
-        if len(m3u8_files) <= 1 and not output:
-            output = m3u8
-        index += 1
-        if store_dir:
-            output = os.path.join(store_dir, output)
+            output_name = m3u8
+        else:
+            if len(m3u8_files) > 1:
+                output_name = "%s_%s" % (output, m3u8)
+            else:
+                output_name = output
 
-        ret_code = merge_ts_by_file(temp.name, output)
+        if store_dir:
+            output_name = os.path.join(store_dir, output_name)
+
+        ret_code = merge_ts_by_file(temp.name, output_name)
         if ret_code != 0:
             print("merge %s.m3u8 failed" % m3u8)
 
